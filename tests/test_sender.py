@@ -35,3 +35,4 @@ def test_createCSV(sender):
         assert row['message'] == sender.queue[i]['message']
     
     os.remove(filename)
+    
