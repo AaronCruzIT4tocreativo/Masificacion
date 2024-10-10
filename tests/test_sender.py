@@ -5,12 +5,13 @@ from sender import Sender
 
 @pytest.fixture
 def sender():
-    name = "Test Sender"
-    queue = [
-        {"contact": "654", "message": "hola"},
-        {"contact": "123", "message": "adios"}
-    ]
-    return Sender(name, queue)
+    return Sender(
+        name="Test Sender",
+        queue=[
+            {"contact": "654", "message": "hola"},
+            {"contact": "123", "message": "adios"}
+        ]
+    )
 
 def test_constructor(sender):
     assert sender.name == "Test Sender"
@@ -35,4 +36,3 @@ def test_createCSV(sender):
         assert row['message'] == sender.queue[i]['message']
     
     os.remove(filename)
-    
