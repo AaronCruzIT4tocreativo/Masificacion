@@ -11,13 +11,11 @@ class Sender:
     def add_values_to_queue(self, values: list):
         self.queue.extend(values)
 
-    def createCSV(self):
+    def create_csv(self):
         filename = f"{self.name}.csv"
         with open(filename, 'w', newline='') as csvfile:
-            fieldnames = ['contact', 'message']
-            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-
-            writer.writeheader()
+            writer = csv.writer(csvfile)
+            
             while self.queue:
                 item = self.queue.popleft()
                 writer.writerow(item)

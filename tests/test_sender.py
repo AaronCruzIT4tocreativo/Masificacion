@@ -30,9 +30,9 @@ def test_add_values_to_queue(sender):
     assert len(sender.queue) == 5
     assert sender.queue[-1] == ["999", "Hi from 999"]
 
-def test_createCSV(sender):
+def test_create_csv(sender):
     initial_queue_length = len(sender.queue)
-    sender.createCSV()
+    sender.create_csv()
     filename = f"{sender.name}.csv"
     
     assert os.path.exists(filename)
