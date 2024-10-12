@@ -8,8 +8,8 @@ from sender import Sender
 def sender():
     s = Sender(name="Test Sender")
     values = [
-        {"654", "hola"},
-        {"123", "adios"}
+        {"contact": "654", "message": "hola"},
+        {"contact": "123", "message": "adios"}
     ]
     s.add_values_to_queue(values)
     return s
@@ -26,7 +26,7 @@ def test_add_values_to_queue(sender):
         {"contact": "999", "message": "Hi from 999"}
     ]
 
-    sender.add_to_queue(values)
+    sender.add_values_to_queue(values)
     assert len(sender.queue) == 5
     assert sender.queue[-1] == {"contact": "999", "message": "Hi from 999"}
 

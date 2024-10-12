@@ -8,7 +8,7 @@ class Sender:
     name: str
     queue: deque = field(default_factory=deque)
 
-    def add_to_queue(self, values: list):
+    def add_values_to_queue(self, values: list):
         self.queue.extend(values)
 
     def createCSV(self):
