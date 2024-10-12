@@ -2,10 +2,12 @@ from dataclasses import dataclass, field
 from collections import deque
 import csv
 from typing import Dict
+from custom_driver import CustomDriver
 
 @dataclass
 class Sender:
     name: str
+    custom_driver: CustomDriver
     queue: deque = field(default_factory=deque)
 
     def add_values_to_queue(self, values: list):

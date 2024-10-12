@@ -4,7 +4,7 @@ from custom_driver import CustomDriver
 @pytest.fixture
 def custom_driver():
     cd = CustomDriver()
-    cd.set_input_elements(["input0", "input1", "input2"])
+    cd.set_input_element_names(["input0", "input1", "input2"])
     cd.set_input_values(["value0", "value1", "value2"])
     return cd
 

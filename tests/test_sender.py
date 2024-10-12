@@ -3,10 +3,15 @@ import os
 import csv
 from collections import deque
 from sender import Sender
+from custom_driver import CustomDriver
 
 @pytest.fixture
-def sender():
-    s = Sender(name="Test Sender")
+def custom_driver():
+    return CustomDriver()
+
+@pytest.fixture
+def sender(custom_driver):
+    s = Sender(name="Test Sender", custom_driver=custom_driver)
     values = [
         ["654", "hola"],
         ["123", "adios"]
