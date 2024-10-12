@@ -7,8 +7,11 @@ from sender import Sender
 @pytest.fixture
 def sender():
     s = Sender(name="Test Sender")
-    s.add_to_queue("654", "hola")
-    s.add_to_queue("123", "adios")
+    values = [
+        {"654", "hola"},
+        {"123", "adios"}
+    ]
+    s.add_values_to_queue(values)
     return s
 
 def test_constructor(sender):
