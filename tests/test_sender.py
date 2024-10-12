@@ -8,8 +8,8 @@ from sender import Sender
 def sender():
     s = Sender(name="Test Sender")
     values = [
-        {"contact": "654", "message": "hola"},
-        {"contact": "123", "message": "adios"}
+        ["654", "hola"],
+        ["123", "adios"]
     ]
     s.add_values_to_queue(values)
     return s
@@ -21,14 +21,14 @@ def test_constructor(sender):
 
 def test_add_values_to_queue(sender):
     values = [
-        {"contact": "997", "message": "Hi from 997"},
-        {"contact": "998", "message": "Hi from 998"},
-        {"contact": "999", "message": "Hi from 999"}
+        ["997", "Hi from 997"],
+        ["998", "Hi from 998"],
+        ["999", "Hi from 999"]
     ]
 
     sender.add_values_to_queue(values)
     assert len(sender.queue) == 5
-    assert sender.queue[-1] == {"contact": "999", "message": "Hi from 999"}
+    assert sender.queue[-1] == ["999", "Hi from 999"]
 
 def test_createCSV(sender):
     initial_queue_length = len(sender.queue)
@@ -39,22 +39,22 @@ def test_createCSV(sender):
     assert len(sender.queue) == 0  # La cola debe estar vacía después de crear el CSV
     
     with open(filename, 'r') as f:
-        reader = csv.DictReader(f)
+        reader = csv.reader(f)
         rows = list(reader)
         
     assert len(rows) == initial_queue_length
-    assert rows[0]['contact'] == "654"
-    assert rows[0]['message'] == "hola"
-    assert rows[1]['contact'] == "123"
-    assert rows[1]['message'] == "adios"
+    assert rows[0][0] == "654"
+    assert rows[0][1] == "hola"
+    assert rows[1][0] == "123"
+    assert rows[1][1] == "adios"
     
     os.remove(filename)
 
 def test_restart_queue(sender):
     values = [
-        {"contact": "997", "message": "Hi from 997"},
-        {"contact": "998", "message": "Hi from 998"},
-        {"contact": "999", "message": "Hi from 999"}
+        ["997", "Hi from 997"],
+        ["998", "Hi from 998"],
+        ["999", "Hi from 999"]
     ]
 
     sender.restart_queue(values)

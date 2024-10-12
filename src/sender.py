@@ -21,3 +21,7 @@ class Sender:
             while self.queue:
                 item = self.queue.popleft()
                 writer.writerow(item)
+
+    def restart_queue(self, values: list):
+        self.queue.clear()
+        self.queue.extend(values)
