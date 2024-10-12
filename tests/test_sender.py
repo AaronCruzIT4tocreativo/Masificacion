@@ -16,10 +16,16 @@ def test_constructor(sender):
     assert isinstance(sender.queue, deque)
     assert len(sender.queue) == 2
 
-def test_add_to_queue(sender):
-    sender.add_to_queue("789", "test")
-    assert len(sender.queue) == 3
-    assert sender.queue[-1] == {"contact": "789", "message": "test"}
+def test_add_elements_to_queue(sender):
+    elements = [
+        {"contact": "997", "message": "Hi from 997"},
+        {"contact": "998", "message": "Hi from 998"},
+        {"contact": "999", "message": "Hi from 999"}
+    ]
+
+    sender.add_to_queue(elements)
+    assert len(sender.queue) == 5
+    assert sender.queue[-1] == {"contact": "999", "message": "Hi from 999"}
 
 def test_createCSV(sender):
     initial_queue_length = len(sender.queue)
@@ -40,3 +46,13 @@ def test_createCSV(sender):
     assert rows[1]['message'] == "adios"
     
     os.remove(filename)
+
+def test_restart_queue(sender):
+    elements = [
+        {"contact": "997", "message": "Hi from 997"},
+        {"contact": "998", "message": "Hi from 998"},
+        {"contact": "999", "message": "Hi from 999"}
+    ]
+
+    sender.restart_queue(elements)
+    assert len(sender.queue) == 3
