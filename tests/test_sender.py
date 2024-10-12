@@ -59,3 +59,10 @@ def test_restart_queue(sender):
 
     sender.restart_queue(values)
     assert len(sender.queue) == 3
+
+def test_send_values(sender):
+    sender.set_input_elements(["input0", "input1"]);
+    assert sender.send_values() == {"status": "error", "message": "The input element is not found"}
+
+    sender.queue.clear()
+    assert sender.send_values() == {"status": "error", "message": "Empty Queue"}
