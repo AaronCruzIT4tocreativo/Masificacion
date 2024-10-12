@@ -2,7 +2,7 @@ import pytest
 import os
 import csv
 from collections import deque
-from src.sender import Sender
+from sender import Sender
 
 @pytest.fixture
 def sender():

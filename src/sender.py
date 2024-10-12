@@ -1,11 +1,15 @@
 from dataclasses import dataclass, field
+from collections import deque
 import csv
-from typing import List, Dict
+from typing import Dict
 
 @dataclass
 class Sender:
     name: str
-    queue: List[Dict[str, str]] = field(default_factory=list)
+    queue: deque = field(default_factory=deque)
+
+    def add_to_queue(self, contact: str, message: str):
+        self.queue.append({"contact": contact, "message": message})
 
     def createCSV(self):
         filename = f"{self.name}.csv"
@@ -14,5 +18,6 @@ class Sender:
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
             writer.writeheader()
-            for item in self.queue:
+            while self.queue:
+                item = self.queue.popleft()
                 writer.writerow(item)
