@@ -9,6 +9,7 @@ class Sender:
     name: str
     custom_driver: CustomDriver
     queue: deque = field(default_factory=deque)
+    input_names: list = field(default_factory=list)
 
     def add_values_to_queue(self, values: list):
         self.queue.extend(values)

@@ -8,8 +8,8 @@ from custom_driver import CustomDriver
 @pytest.fixture
 def custom_driver():
     cd = CustomDriver()
-    cd.set_input_element_names(["input0", "input1", "input2"])
-    cd.set_input_values(["value0", "value1", "value2"])
+    cd.input_element_names = ["input0", "input1", "input2"]
+    cd.input_values = ["value0", "value1", "value2"]
     return cd
 
 @pytest.fixture
@@ -69,7 +69,7 @@ def test_restart_queue(sender):
     assert len(sender.queue) == 3
 
 def test_send_values(custom_driver, sender):
-    sender.set_input_names(["input7", "input9"]);
+    sender.input_names = ["input7", "input9"]
     assert custom_driver.find_input_element("input0") == "The input element is not found"
 
     sender.queue.clear()
