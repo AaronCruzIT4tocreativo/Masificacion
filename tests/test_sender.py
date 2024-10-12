@@ -16,14 +16,14 @@ def test_constructor(sender):
     assert isinstance(sender.queue, deque)
     assert len(sender.queue) == 2
 
-def test_add_elements_to_queue(sender):
-    elements = [
+def test_add_values_to_queue(sender):
+    values = [
         {"contact": "997", "message": "Hi from 997"},
         {"contact": "998", "message": "Hi from 998"},
         {"contact": "999", "message": "Hi from 999"}
     ]
 
-    sender.add_to_queue(elements)
+    sender.add_to_queue(values)
     assert len(sender.queue) == 5
     assert sender.queue[-1] == {"contact": "999", "message": "Hi from 999"}
 
@@ -48,11 +48,11 @@ def test_createCSV(sender):
     os.remove(filename)
 
 def test_restart_queue(sender):
-    elements = [
+    values = [
         {"contact": "997", "message": "Hi from 997"},
         {"contact": "998", "message": "Hi from 998"},
         {"contact": "999", "message": "Hi from 999"}
     ]
 
-    sender.restart_queue(elements)
+    sender.restart_queue(values)
     assert len(sender.queue) == 3
