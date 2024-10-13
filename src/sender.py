@@ -29,3 +29,6 @@ class Sender:
     def send_values(self):
         if len(self.queue) == 0:
             return {"status": "error", "message": "Empty Queue"}
+        
+    def set_input_names(self, names: list):
+        self.custom_driver.input_element_names = names
