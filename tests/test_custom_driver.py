@@ -15,4 +15,4 @@ def test_find_input_element(custom_driver):
     
     expected_input = "input7"
     result = custom_driver.find_input_element(expected_input)
-    assert result == "The input element is not found"
+    assert result == {"status": "error", "message": "The input element is not found"}

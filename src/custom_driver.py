@@ -9,4 +9,4 @@ class CustomDriver:
         if element in self.input_element_names: 
             return "Element found"
         else:
-            return "The input element is not found"
+            return {"status": "error", "message": "The input element is not found"}

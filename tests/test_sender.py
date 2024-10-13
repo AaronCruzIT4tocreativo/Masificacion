@@ -75,4 +75,4 @@ def test_send_values(sender):
 def test_set_input_names(custom_driver, sender):
     sender.set_input_names(["input7", "input9"])
     assert custom_driver.find_input_element("input7") == "Element found"
-    assert custom_driver.find_input_element("input0") == "The input element is not found"
+    assert custom_driver.find_input_element("input0") == {"status": "error", "message": "The input element is not found"}
