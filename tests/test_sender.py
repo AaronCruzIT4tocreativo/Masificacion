@@ -69,7 +69,8 @@ def test_restart_queue(sender):
     assert len(sender.queue) == 3
 
 def test_send_values(custom_driver, sender):
-    sender.input_names = ["input7", "input9"]
+    sender.set_input_names(["input7", "input9"])
+    assert custom_driver.find_input_element("input7") == "Element found"
     assert custom_driver.find_input_element("input0") == "The input element is not found"
 
     sender.queue.clear()

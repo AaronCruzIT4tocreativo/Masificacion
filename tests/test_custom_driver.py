@@ -9,6 +9,6 @@ def custom_driver():
     return cd
 
 def test_find_input_element(custom_driver):
-    expected_input = "input3"
+    expected_input = "input0"
     result = custom_driver.find_input_element(expected_input)
     assert "The input element is not found" == result

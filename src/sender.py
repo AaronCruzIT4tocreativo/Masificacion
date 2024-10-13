@@ -9,7 +9,6 @@ class Sender:
     name: str
     custom_driver: CustomDriver
     queue: deque = field(default_factory=deque)
-    input_names: list = field(default_factory=list)
 
     def add_values_to_queue(self, values: list):
         self.queue.extend(values)
@@ -26,3 +25,7 @@ class Sender:
     def restart_queue(self, values: list):
         self.queue.clear()
         self.queue.extend(values)
+
+    def send_values(self):
+        if len(self.queue) == 0:
+            return {"status": "error", "message": "Empty Queue"}

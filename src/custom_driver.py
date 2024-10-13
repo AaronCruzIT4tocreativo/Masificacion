@@ -6,5 +6,7 @@ class CustomDriver:
     values: list = field(default_factory=list)
 
     def find_input_element(self, element: str):
-        if element not in self.element_names: 
+        if element in self.element_names: 
+            return "Element found"
+        else:
             return "The input element is not found"
