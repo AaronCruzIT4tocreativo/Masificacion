@@ -14,7 +14,7 @@ def custom_driver():
 
 @pytest.fixture
 def sender(custom_driver):
-    s = Sender(name="Test Sender", custom_driver=custom_driver)
+    s = Sender(custom_driver=custom_driver)
     values = [
         ["654", "hola"],
         ["123", "adios"]
@@ -23,7 +23,6 @@ def sender(custom_driver):
     return s
 
 def test_constructor(sender):
-    assert sender.name == "Test Sender"
     assert isinstance(sender.queue, deque)
     assert len(sender.queue) == 2
 
