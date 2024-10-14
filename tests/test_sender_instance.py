@@ -5,7 +5,9 @@ from sender import Sender
 @pytest.fixture
 def sender_instance():
     si = SenderInstance(sender = sender)
-    return si
+    yield si
+    si.play_event.set()
+    si.play_thread.join()
 
 @pytest.fixture
 def sender():
@@ -19,15 +21,15 @@ def sender():
 
 def test_play(sender_instance):
     sender_instance.play()
-    assert sender_instance.events.play.is_set() == True
+    assert sender_instance.play_event.is_set() == True
 
 def test_pause(sender_instance):
     sender_instance.pause()
-    assert sender_instance.events.play.is_set() == False
+    assert sender_instance.play_event.is_set() == False
 
 def test_stop(sender_instance, sender):
     sender_instance.stop()
-    assert sender_instance.events.play.is_set() == False
+    assert sender_instance.play_event.is_set() == False
     assert len(sender.queue) == 0
 
 def test_restart(sender_instance, sender):
@@ -37,5 +39,5 @@ def test_restart(sender_instance, sender):
         ["999", "Hi from 999"]
     ]
     sender_instance.restart(values)
-    assert sender_instance.events.play.is_set() == True
+    assert sender_instance.play_event.is_set() == True
     assert len(sender.queue) == 3
