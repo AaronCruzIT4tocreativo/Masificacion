@@ -70,6 +70,15 @@ def test_restart_queue(sender):
 def test_send_values(sender):
     assert sender.send_values() == {"status": "ok", "message": "Messages Sent Successfully"}
 
+    values = [
+        ["997", "Hi from 997"],
+        ["998", ""],
+        ["999", "Hi from 999"]
+    ]
+    sender.queue = deque()
+    sender.queue.extend(values)
+    assert sender.send_values() == {"status": "error", "message": "Empty Value"}
+
     sender.queue.clear()
     assert sender.send_values() == {"status": "error", "message": "Empty Queue"}
 

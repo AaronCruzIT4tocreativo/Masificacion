@@ -17,6 +17,9 @@ class CustomDriver:
         
         self.inputs_values = values
 
+        for input_value in self.inputs_values:
+            if input_value == "": return {"status": "error", "message": "Empty Value"}
+
         # Add the driver interaction logic here using the values
         
         return {"status": "ok", "message": "Message has been sent"}
