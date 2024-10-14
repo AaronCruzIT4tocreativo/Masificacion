@@ -12,7 +12,11 @@ class CustomDriver:
             return {"status": "error", "message": "The input element is not found"}
 
     def send_inputs_values(self, values: list = []):
-        # Add the driver interaction logic here
         if len(values) == 0:
             return {"status": "error", "message": "Missing Values"}
+        
+        self.inputs_values = values
+
+        # Add the driver interaction logic here using the values
+        
         return {"status": "ok", "message": "Message has been sent"}
