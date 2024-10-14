@@ -9,7 +9,7 @@ def sender_instance():
 
 @pytest.fixture
 def sender():
-    s = Sender()
+    s = Sender(name="Instancia 0")
     values = [
         ["654", "hola"],
         ["123", "adios"]

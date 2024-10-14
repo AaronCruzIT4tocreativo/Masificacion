@@ -14,7 +14,7 @@ def custom_driver():
 
 @pytest.fixture
 def sender(custom_driver):
-    s = Sender(custom_driver=custom_driver)
+    s = Sender(name="Instancia 0", custom_driver=custom_driver)
     values = [
         ["654", "hola"],
         ["123", "adios"]
