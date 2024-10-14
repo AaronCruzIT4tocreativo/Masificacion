@@ -8,7 +8,7 @@ from custom_driver import CustomDriver
 @pytest.fixture
 def custom_driver():
     cd = CustomDriver()
-    cd.input_element_names = ["input0", "input1", "input2"]
+    cd.input_elements_names = ["input0", "input1", "input2"]
     cd.input_values = ["value0", "value1", "value2"]
     return cd
 
@@ -69,6 +69,8 @@ def test_restart_queue(sender):
     assert len(sender.queue) == 3
 
 def test_send_values(sender):
+    assert sender.send_values() == {"status": "ok", "message": "Messages Sent Successfully"}
+
     sender.queue.clear()
     assert sender.send_values() == {"status": "error", "message": "Empty Queue"}
 
