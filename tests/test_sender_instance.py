@@ -37,13 +37,13 @@ def test_stop(sender_instance, sender):
     assert sender_instance.is_running == False
     assert sender_instance.play_event.is_set() == False
 
-def test_restart(sender_instance, sender):
+def test_set_up(sender_instance, sender):
     values = [
         ["997", "Hi from 997"],
         ["998", "Hi from 998"],
         ["999", "Hi from 999"]
     ]
-    sender_instance.restart(values)
+    sender_instance.set_up(values)
     assert sender_instance.is_running == True
     assert sender_instance.play_event.is_set() == True
     assert len(sender.queue) == 3
