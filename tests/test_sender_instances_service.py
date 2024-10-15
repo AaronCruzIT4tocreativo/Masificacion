@@ -1,4 +1,3 @@
-from collections import deque
 import pytest
 from sender_instances_service import SenderInstancesService
 from sender_instance import SenderInstance
@@ -45,5 +44,5 @@ def test_set_instance_queue(sender_instances_service, sender):
         ["654", "hola"],
         ["123", "adios"]
     ]
-    sender_instances_service.set_instance_queue(deque(values))
+    sender_instances_service.set_instance_queue(0, values)
     assert len(sender.queue) == 2
