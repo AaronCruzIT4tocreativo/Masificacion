@@ -26,10 +26,11 @@ class Sender:
         self.queue.clear()
         self.queue.extend(values)
 
-    def send_values(self):
+    def send_values(self, pause: bool = False):
         if len(self.queue) == 0:
             return {"status": "error", "message": "Empty Queue"}
         while self.queue:
+            if pause: return {"status": "ok", "message": "Paused"}
             values = self.queue.popleft()
             result = self.custom_driver.send_inputs_values(values)
             if result != {"status": "ok", "message": "Message has been sent"}:

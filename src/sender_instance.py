@@ -6,6 +6,7 @@ from threading import Event, Thread
 class SenderInstance:
     sender: Sender = field(default_factory=Sender)
     play_event: Event = field(default_factory=Event)
+    is_running: bool = field(default=False)
     play_thread: Thread = field(init=False)
 
     def __post_init__(self):
@@ -13,13 +14,19 @@ class SenderInstance:
         self.play_thread.start()
 
     def play(self):
+        self.is_running = True
         self.play_event.set()
 
     def on_play(self):
-        while True:
-            self.play_event.wait()
+        self.play_event.wait()
+        self.play_event.clear()
+        if self.is_running:
             self.sender.send_values()
-            self.play_event.clear()
+            self.on_play()
 
     def pause(self):
         self.play_event.clear()
+
+    def stop(self):
+        self.is_running = False
+        self.play_event.set()
