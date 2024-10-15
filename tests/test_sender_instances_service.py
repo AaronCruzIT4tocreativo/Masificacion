@@ -12,8 +12,12 @@ def sender_instances_service(sender_instance):
 
 @pytest.fixture
 def sender_instance(sender):    
-    sis = SenderInstance(sender=sender)
-    return sis
+    si = SenderInstance(sender=sender)
+    yield si
+    si.is_running = False
+    si.play_event.set()
+    si.play_event.clear()
+    si.play_thread.join()
 
 @pytest.fixture
 def sender():
@@ -26,15 +30,15 @@ def test_append_instance(sender_instances_service, sender_instance):
 
 def test_play_instance(sender_instances_service, sender_instance):
     sender_instances_service.play_instance(0)
-    assert sender_instance.play_event.is_set == True
+    assert sender_instance.play_event.is_set() == True
 
 def test_pause_instance(sender_instances_service, sender_instance):
     sender_instances_service.pause_instance(0)
-    assert sender_instance.play_event.is_set == False
+    assert sender_instance.play_event.is_set() == False
 
 def test_stop_instance(sender_instances_service, sender_instance):
     sender_instances_service.stop_instance(0)
-    assert sender_instance.play_event.is_set == False
+    assert sender_instance.play_event.is_set() == False
 
 def test_set_instance_queue(sender_instances_service, sender):
     values = [

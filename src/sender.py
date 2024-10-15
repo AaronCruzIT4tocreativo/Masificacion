@@ -31,6 +31,7 @@ class Sender:
         while self.queue:
             if pause: return {"status": "ok", "message": "Paused"}
             values = self.queue.popleft()
+            # Add Random Time Here
             result = self.custom_driver.send_inputs_values(values)
             if result != {"status": "ok", "message": "Message has been sent"}:
                 return result
