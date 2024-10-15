@@ -21,7 +21,7 @@ class SenderInstance:
         self.play_event.wait()
         self.play_event.clear()
         if self.is_running:
-            self.sender.send_values()
+            self.sender.send_values(self.is_running)
             self.on_play()
 
     def pause(self):
@@ -29,4 +29,4 @@ class SenderInstance:
 
     def stop(self):
         self.is_running = False
-        self.play_event.set()
+        self.sender.queue.clear()
