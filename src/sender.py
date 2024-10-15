@@ -1,7 +1,6 @@
 from dataclasses import dataclass, field
 from collections import deque
 import csv
-from typing import Dict
 from custom_driver import CustomDriver
 
 @dataclass

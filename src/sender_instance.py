@@ -34,5 +34,4 @@ class SenderInstance:
     def set_up(self, values: list):
         self.sender.queue.clear()
         self.sender.queue.extend(values)
-        self.is_running = True
-        self.play_event.set()
+        self.play()
