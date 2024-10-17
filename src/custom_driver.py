@@ -25,4 +25,4 @@ class CustomDriver:
         return {"status": "ok", "message": "Message has been sent", "async_instructions": self.async_instructions}
 
     async def async_instructions(self):
-        return {"status": "ok", "message": f"Async instructions haven been executed successfully {self.inputs_values[2]}"}
+        return {"status": "ok", "message": "Async instructions haven been executed successfully"}
