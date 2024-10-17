@@ -39,3 +39,7 @@ class Sender:
         
     def set_inputs_names(self, names: list):
         self.custom_driver.input_elements_names = names
+
+    def send_case_values(self):
+        case_values = self.queue.popleft()
+        self.custom_driver.send_inputs_values(case_values)

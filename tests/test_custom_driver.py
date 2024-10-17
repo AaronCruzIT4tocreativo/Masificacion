@@ -1,6 +1,5 @@
 import pytest
 import asyncio
-import asyncio
 from custom_driver import CustomDriver
 
 @pytest.fixture
@@ -24,7 +23,8 @@ def test_send_inputs_values(custom_driver):
     result = custom_driver.send_inputs_values()
     assert expected_result == result
 
-    expected_result = {"status": "ok", "message": "Message has been sent"}
     result = custom_driver.send_inputs_values(["value99", "value98", "value99"])
-    assert expected_result == result
+    assert result['status'] == "ok"
+    assert result['message'] == "Message has been sent"
+    assert asyncio.run(result['async_instructions']()) == {"status": "ok", "message": "Async instructions haven been executed successfully value99"}
     assert custom_driver.inputs_values == ["value99", "value98", "value99"]

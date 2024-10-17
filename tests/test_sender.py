@@ -87,3 +87,8 @@ def test_set_inputs_names(custom_driver, sender):
     sender.set_inputs_names(["input7", "input9"])
     assert custom_driver.find_input_element("input7") == "Element found"
     assert custom_driver.find_input_element("input0") == {"status": "error", "message": "The input element is not found"}
+
+def test_send_case_values(sender):
+    sender.send_case_values()
+    assert len(sender.queue) == 1
+    assert sender.queue.popleft() == ["123", "adios"]
