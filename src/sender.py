@@ -42,4 +42,5 @@ class Sender:
 
     def send_case_values(self):
         case_values = self.queue.popleft()
-        self.custom_driver.send_inputs_values(case_values)
+        result = self.custom_driver.send_inputs_values(case_values)
+        return result['async_instructions']

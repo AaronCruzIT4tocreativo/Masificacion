@@ -1,3 +1,4 @@
+import asyncio
 import pytest
 import os
 import csv
@@ -89,6 +90,6 @@ def test_set_inputs_names(custom_driver, sender):
     assert custom_driver.find_input_element("input0") == {"status": "error", "message": "The input element is not found"}
 
 def test_send_case_values(sender):
-    sender.send_case_values()
+    assert asyncio.run((sender.send_case_values())()) == {"status": "ok", "message": "Async instructions haven been executed successfully"}
     assert len(sender.queue) == 1
     assert sender.queue.popleft() == ["123", "adios"]

@@ -29,8 +29,18 @@ def test_append_instance(sender_instances_service, sender_instance):
     assert len(sender_instances_service.instances) == 2
 
 def test_play_instance(sender_instances_service, sender_instance):
-    async_instance_instructions = sender_instances_service.play_instance(0)
-    assert asyncio.run(async_instance_instructions()) == {"status": "ok", "message": "Async instructions haven been executed successfully"}
+    values = [
+        ["654", "hola"],
+        ["123", "adios"]
+    ]
+    sender_instances_service.set_instance_queue(0, values)
+    
+    sender_instances_service.play_instance(0)
+    assert len(sender_instances_service.async_instances_instructions) == 1
+    assert asyncio.run(sender_instances_service.async_instances_instructions()) == {
+        "status": "ok", 
+        "message": "Async instructions haven been executed successfully"
+    }
     assert sender_instance.play_event.is_set() == True
 
 def test_pause_instance(sender_instances_service, sender_instance):
