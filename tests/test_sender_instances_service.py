@@ -1,3 +1,4 @@
+import asyncio
 import pytest
 from sender_instances_service import SenderInstancesService
 from sender_instance import SenderInstance
@@ -28,7 +29,8 @@ def test_append_instance(sender_instances_service, sender_instance):
     assert len(sender_instances_service.instances) == 2
 
 def test_play_instance(sender_instances_service, sender_instance):
-    sender_instances_service.play_instance(0)
+    async_instance_instructions = sender_instances_service.play_instance(0)
+    assert asyncio.run(async_instance_instructions()) == {"status": "ok", "message": "Async instructions haven been executed successfully"}
     assert sender_instance.play_event.is_set() == True
 
 def test_pause_instance(sender_instances_service, sender_instance):
@@ -46,3 +48,8 @@ def test_set_instance_queue(sender_instances_service, sender):
     ]
     sender_instances_service.set_instance_queue(0, values)
     assert len(sender.queue) == 2
+
+# def test_manage_async_instance_instructions(sender_instances_service):
+#     sender_instances_service.manage_active_instance(0)
+#     assert len(sender_instances_service.active_instances) == 1
+#     assert asyncio.run(sender_instances_service.active_instances[0]()) == {"status"}
