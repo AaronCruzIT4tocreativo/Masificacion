@@ -1,4 +1,3 @@
-from collections import deque
 from dataclasses import dataclass, field
 from collections import deque
 from sender_instance import SenderInstance
