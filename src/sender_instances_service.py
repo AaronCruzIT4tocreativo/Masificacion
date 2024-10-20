@@ -1,5 +1,6 @@
 from collections import deque
 from dataclasses import dataclass, field
+from collections import deque
 from sender_instance import SenderInstance
 
 @dataclass
@@ -11,7 +12,7 @@ class SenderInstancesService:
         self.instances.append(sender_instance)
 
     def play_instance(self, index: int):
-        self.instances[index].play(service_queue=self.async_instances_instructions)
+        self.instances[index].play(main_queue=self.async_instances_instructions)
 
     def pause_instance(self, index: int):
         self.instances[index].pause()

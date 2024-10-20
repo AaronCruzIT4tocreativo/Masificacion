@@ -10,13 +10,14 @@ class SenderInstance:
     is_running: bool = field(default=False)
     play_thread: Thread = field(init=False)
     async_instructions: deque = field(init=False)
+    operation_done: Event = field(default_factory=Event)
 
     def __post_init__(self):
         self.play_thread = Thread(target=self.on_play)
         self.play_thread.start()
 
-    def play(self, service_queue: deque = deque()):
-        self.async_instructions = service_queue
+    def play(self, main_queue: deque = None):
+        self.async_instructions = main_queue
         self.is_running = True
         self.play_event.set()
 
@@ -24,7 +25,9 @@ class SenderInstance:
         self.play_event.wait()
         self.play_event.clear()
         if self.is_running:
-            self.async_instructions.append(self.sender.send_case_values())
+            self.async_instructions.append("Hola")
+            self.sender.send_values(self.is_running)
+            self.operation_done.set()  # Signal that the operation is done
             self.on_play()
 
     def pause(self):
