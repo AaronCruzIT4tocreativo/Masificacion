@@ -24,10 +24,12 @@ class SenderInstance:
     def on_play(self):
         self.play_event.wait()
         self.play_event.clear()
-        if self.is_running:
-            self.async_instructions.append("Hola")
-            self.sender.send_values(self.is_running)
+        if self.is_running and len(self.sender.queue) != 0:
+            sender_instructions = self.sender.send_case_values()
+            self.async_instructions.append(sender_instructions)
             self.operation_done.set()  # Signal that the operation is done
+            
+            self.play_event.set()
             self.on_play()
 
     def pause(self):

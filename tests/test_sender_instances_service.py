@@ -29,9 +29,16 @@ def test_append_instance(sender_instances_service, sender_instance):
     assert len(sender_instances_service.instances) == 2
 
 def test_play_instance(sender_instances_service):
+    values = [
+        ["654", "hola"],
+        ["123", "adios"]
+    ]
+    sender_instances_service.set_instance_queue(0, values)
+
     sender_instances_service.play_instance(0)
     
     # Wait for the operation to complete
+    sender_instances_service.instances[0].operation_done.wait(timeout=1)
     sender_instances_service.instances[0].operation_done.wait(timeout=1)
     
     assert sender_instances_service.async_instances_instructions is sender_instances_service.instances[0].async_instructions        
@@ -41,7 +48,7 @@ def test_play_instance(sender_instances_service):
     # sender_instances_service.instances[0].play_event.clear()
     # sender_instances_service.instances[0].play_thread.join()
     
-    assert len(sender_instances_service.async_instances_instructions) == 1
+    assert len(sender_instances_service.async_instances_instructions) == 2
     
 def test_pause_instance(sender_instances_service, sender_instance):
     sender_instances_service.pause_instance(0)
