@@ -39,7 +39,12 @@ def test_play_instance(sender_instances_service):
     
     # Wait for the operation to complete
     sender_instances_service.instances[0].operation_done.wait(timeout=1)
-    sender_instances_service.instances[0].operation_done.wait(timeout=1)
+    result = asyncio.run(
+        sender_instances_service.async_instances_instructions.popleft()())
+    assert result == {"status": "ok",
+     "message": "Async instructions haven been executed successfully"}
+    sender_instances_service.instances[0].operation_done.wait(timeout=1)    
+    assert len(sender_instances_service.async_instances_instructions) == 1
     
     assert sender_instances_service.async_instances_instructions is sender_instances_service.instances[0].async_instructions        
     
@@ -47,8 +52,6 @@ def test_play_instance(sender_instances_service):
     # sender_instances_service.instances[0].play_event.set()
     # sender_instances_service.instances[0].play_event.clear()
     # sender_instances_service.instances[0].play_thread.join()
-    
-    assert len(sender_instances_service.async_instances_instructions) == 2
     
 def test_pause_instance(sender_instances_service, sender_instance):
     sender_instances_service.pause_instance(0)

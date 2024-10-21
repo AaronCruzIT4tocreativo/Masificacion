@@ -2,6 +2,7 @@ from collections import deque
 from dataclasses import dataclass, field
 from sender import Sender
 from threading import Event, Thread
+from typing import Callable, Dict
 
 @dataclass
 class SenderInstance:
@@ -10,6 +11,9 @@ class SenderInstance:
     is_running: bool = field(default=False)
     play_thread: Thread = field(init=False)
     async_instructions: deque = field(init=False)
+    sender_instructions: Callable[[],
+            Callable[[], Dict[str, str]]
+    ] = field(init=False)
     operation_done: Event = field(default_factory=Event)
 
     def __post_init__(self):
@@ -25,11 +29,10 @@ class SenderInstance:
         self.play_event.wait()
         self.play_event.clear()
         if self.is_running and len(self.sender.queue) != 0:
-            sender_instructions = self.sender.send_case_values()
-            self.async_instructions.append(sender_instructions)
+            self.sender_instructions = self.sender.send_case_values()
+            self.async_instructions.append(self.play_async_instructions)
+            # self.play_event.set()            
             self.operation_done.set()  # Signal that the operation is done
-            
-            self.play_event.set()
             self.on_play()
 
     def pause(self):
@@ -42,3 +45,9 @@ class SenderInstance:
     def set_sender_queue(self, values: list):
         self.sender.queue.clear()
         self.sender.queue.extend(values)
+
+    async def play_async_instructions(self):
+        result = self.sender_instructions()
+        self.operation_done.set()  # Signal that the operation is done
+        self.play_event.set()
+        return result

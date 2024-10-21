@@ -9,20 +9,26 @@ class CustomDriver:
         if element in self.input_elements_names:
             return "Element found"
         else:
-            return {"status": "error", "message": "The input element is not found"}
+            return {"status": "error",
+             "message": "The input element is not found"}
 
     def send_inputs_values(self, values: list = []):
         if len(values) == 0:
-            return {"status": "error", "message": "Missing Values"}
+            return {"status": "error",
+             "message": "Missing Values"}
         
         self.inputs_values = values
 
         for input_value in self.inputs_values:
-            if input_value == "": return {"status": "error", "message": "Empty Value"}
+            if input_value == "": return {"status": "error",
+             "message": "Empty Value"}
 
         # Add the driver interaction logic here using the values
         
-        return {"status": "ok", "message": "Message has been sent", "async_instructions": self.async_instructions}
+        return {"status": "ok",
+         "message": "Message has been sent",
+           "async_instructions": self.async_instructions}
 
-    async def async_instructions(self):
-        return {"status": "ok", "message": "Async instructions haven been executed successfully"}
+    def async_instructions(self):
+        return {"status": "ok",
+         "message": "Async instructions haven been executed successfully"}
