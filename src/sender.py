@@ -5,7 +5,7 @@ from custom_driver import CustomDriver
 
 @dataclass
 class Sender:
-    name: str
+    name: str = field(default_factory=str)
     custom_driver: CustomDriver = field(default_factory=CustomDriver)
     queue: deque = field(default_factory=deque)
 
