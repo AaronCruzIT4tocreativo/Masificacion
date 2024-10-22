@@ -8,7 +8,9 @@ from sender import Sender
 def sender_instances_service(sender_instance):
     sis = SenderInstancesService()
     sis.instances.append(sender_instance)
-    return sis
+    yield sis
+    sis.play_event.clear()
+    sis.play_thread.join()
 
 @pytest.fixture
 def sender_instance(sender):    
@@ -24,8 +26,8 @@ def sender():
     s = Sender(name="Instancia 0")
     return s
 
-def test_append_instance(sender_instances_service, sender_instance):
-    sender_instances_service.append_instance(sender_instance)
+def test_append_instance(sender_instances_service):
+    sender_instances_service.append_instance()
     assert len(sender_instances_service.instances) == 2
 
 def test_play_instance(sender_instances_service):

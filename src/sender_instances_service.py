@@ -14,6 +14,7 @@ class SenderInstancesService:
 
     def __post_init__(self):
         self.play_thread = Thread(target=self.manage_async_instructions)
+        self.play_event.set()
         self.play_thread.start()
 
     def append_instance (self):

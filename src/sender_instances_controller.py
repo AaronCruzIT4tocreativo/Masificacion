@@ -32,8 +32,8 @@ class SenderInstancesController:
             except ValueError:
                 response_body = 'Invalid index.'
                 # response_body = self.start_sessions(environ)
-        # elif path == 'session/continue':
-        #     response_body = self.continue_sessions(environ)
+        elif path == 'instances/play':
+            response_body = self.start_instance(environ)
         # elif path == 'session/pause':
         #     response_body = self.pause_sessions(environ)
         # elif path == 'session/stop':
@@ -66,14 +66,14 @@ class SenderInstancesController:
     #     except ValueError:
     #         return 'Invalid index.'
 
-    # def continue_sessions(self, environ):        
-    #     query = environ.get('QUERY_STRING', '')
-    #     try:
-    #         session = int(self.get_query_param(query, 'session'))
-    #         self.sender_instances_service.trigger_function(session, 2)
-    #         return 'Driver played'
-    #     except ValueError:
-    #         return 'Invalid index.'
+    def start_instance(self, environ):        
+        query = environ.get('QUERY_STRING', '')
+        try:
+            index = int(self.get_query_param(query, 'index'))
+            self.sender_instances_service.play_instance(index)
+            return 'Driver played'
+        except ValueError:
+            return 'Invalid index.'
 
     # def pause_sessions(self, environ):        
     #     query = environ.get('QUERY_STRING', '')
